@@ -13,7 +13,7 @@ const base64VLQ = require('./base64-vlq');
 const UglifyJS = require('uglify-js');
 const ModuleTransport = require('../lib/ModuleTransport');
 const Activity = require('../Activity');
-
+const splitForBundle = require('./split-for-bundle');
 const SOURCEMAPPING_URL = '\n\/\/# sourceMappingURL=';
 
 const minifyCode = code =>
@@ -379,6 +379,7 @@ class Bundle {
   }
 
   static fromJSON(json) {
+    json = splitForBundle.processJSON(json)
     const bundle = new Bundle(json.sourceMapUrl);
     bundle._mainModuleId = json.mainModuleId;
     bundle._assets = json.assets;
